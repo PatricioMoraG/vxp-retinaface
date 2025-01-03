@@ -145,9 +145,9 @@ def main(args):
     pipeline.add(sink)
 
     print("Linking elements in the Pipeline \n")
-    streammux.link(queue1)
-    queue1.link(pgie)
-    pgie.link(queue2)
+    streammux.link(queue2)
+    #queue1.link(pgie)
+    #pgie.link(queue2)
     queue2.link(tiler)
     tiler.link(queue5)
     queue5.link(nvvidconv)
