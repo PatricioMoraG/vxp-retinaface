@@ -35,6 +35,7 @@ python3 main.py {VideoPath}
 ```
 
 ## References
++ [zhouyuchong/retinaface-deepstream-python](https://github.com/zhouyuchong/retinaface-deepstream-python)
 + [wang-xinyu/tensorrtx](https://github.com/wang-xinyu/tensorrtx)
 + [NVIDIA-AI-IOT/deepstream_python_apps](https://github.com/NVIDIA-AI-IOT/deepstream_python_apps)
 
