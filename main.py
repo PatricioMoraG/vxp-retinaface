@@ -18,7 +18,7 @@ from config import *
 from probe import *
 
 import ctypes
-ctypes.cdll.LoadLibrary('retinaface/libdecodeplugin.so')
+#ctypes.cdll.LoadLibrary('retinaface/libdecodeplugin.so')
 
 
 def main(args):
