@@ -17,6 +17,9 @@ from common.utils import cal_ratio
 from config import *
 from probe import *
 
+import sys
+import gi
+
 import ctypes
 #ctypes.cdll.LoadLibrary('retinaface/libdecodeplugin.so')
 
