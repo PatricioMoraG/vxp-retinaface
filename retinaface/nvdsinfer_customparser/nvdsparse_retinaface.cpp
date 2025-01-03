@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#include "nvdsinfer_custom_impl.h"
+#include <nvdsinfer_custom_impl.h>
 #include <algorithm>
 #include <cassert>
 #include <cmath>
