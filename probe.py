@@ -9,7 +9,7 @@ import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 
-from rface_custom import *
+#from rface_custom import *
 
 import pyds
 
@@ -32,27 +32,28 @@ def osd_sink_pad_buffer_probe(pad, info, u_data):
             break
         
         frame_number=frame_meta.frame_num
-        result_landmark = []
+        #result_landmark = []
+        result_bbox = []
         l_user=frame_meta.frame_user_meta_list
-        while l_user is not None:
-            try:
-                user_meta=pyds.NvDsUserMeta.cast(l_user.data) 
-            except StopIteration:
-                break
+        # while l_user is not None:
+        #     try:
+        #         user_meta=pyds.NvDsUserMeta.cast(l_user.data) 
+        #     except StopIteration:
+        #         break
             
-            if(user_meta and user_meta.base_meta.meta_type==pyds.NvDsMetaType.NVDSINFER_TENSOR_OUTPUT_META): 
-                try:
-                    tensor_meta = pyds.NvDsInferTensorMeta.cast(user_meta.user_meta_data)
-                except StopIteration:
-                    break
+        #     if(user_meta and user_meta.base_meta.meta_type==pyds.NvDsMetaType.NVDSINFER_TENSOR_OUTPUT_META): 
+        #         try:
+        #             tensor_meta = pyds.NvDsInferTensorMeta.cast(user_meta.user_meta_data)
+        #         except StopIteration:
+        #             break
                 
-                layer = pyds.get_nvds_LayerInfo(tensor_meta, 0)
-                result_landmark = parse_objects_from_tensor_meta(layer)
+        #         layer = pyds.get_nvds_LayerInfo(tensor_meta, 0)
+        #         result_bbox = parse_objects_from_tensor_meta(layer)
                    
-            try:
-                l_user=l_user.next
-            except StopIteration:
-                break    
+        #     try:
+        #         l_user=l_user.next
+        #     except StopIteration:
+        #         break    
           
         num_rects = frame_meta.num_obj_meta
         face_count = 0
@@ -84,24 +85,24 @@ def osd_sink_pad_buffer_probe(pad, info, u_data):
         # display_meta.num_circles = len(result_landmark) * 5
         display_meta=pyds.nvds_acquire_display_meta_from_pool(batch_meta)
         ccount = 0
-        for i in range(len(result_landmark)):
-            # scale coordinates
-            landmarks = result_landmark[i] * scale_ratio
-            # nvosd struct can only draw MAX 16 elements once 
-            # so acquire a new display meta for every face detected
-            display_meta=pyds.nvds_acquire_display_meta_from_pool(batch_meta)   
-            display_meta.num_circles = 5
-            ccount = 0
-            for j in range(5):
-                py_nvosd_circle_params = display_meta.circle_params[ccount]
-                py_nvosd_circle_params.circle_color.set(0.0, 0.0, 1.0, 1.0)
-                py_nvosd_circle_params.has_bg_color = 1
-                py_nvosd_circle_params.bg_color.set(0.0, 0.0, 0.0, 1.0)
-                py_nvosd_circle_params.xc = int(landmarks[j * 2]) if int(landmarks[j * 2]) > 0 else 0
-                py_nvosd_circle_params.yc = int(landmarks[j * 2 + 1]) if int(landmarks[j * 2 + 1]) > 0 else 0
-                py_nvosd_circle_params.radius=2
-                ccount = ccount + 1
-            pyds.nvds_add_display_meta_to_frame(frame_meta, display_meta)
+        # for i in range(len(result_landmark)):
+        #     # scale coordinates
+        #     landmarks = result_landmark[i] * scale_ratio
+        #     # nvosd struct can only draw MAX 16 elements once 
+        #     # so acquire a new display meta for every face detected
+        #     display_meta=pyds.nvds_acquire_display_meta_from_pool(batch_meta)   
+        #     display_meta.num_circles = 5
+        #     ccount = 0
+        #     for j in range(5):
+        #         py_nvosd_circle_params = display_meta.circle_params[ccount]
+        #         py_nvosd_circle_params.circle_color.set(0.0, 0.0, 1.0, 1.0)
+        #         py_nvosd_circle_params.has_bg_color = 1
+        #         py_nvosd_circle_params.bg_color.set(0.0, 0.0, 0.0, 1.0)
+        #         py_nvosd_circle_params.xc = int(landmarks[j * 2]) if int(landmarks[j * 2]) > 0 else 0
+        #         py_nvosd_circle_params.yc = int(landmarks[j * 2 + 1]) if int(landmarks[j * 2 + 1]) > 0 else 0
+        #         py_nvosd_circle_params.radius=2
+        #         ccount = ccount + 1
+        #     pyds.nvds_add_display_meta_to_frame(frame_meta, display_meta)
 
         display_meta=pyds.nvds_acquire_display_meta_from_pool(batch_meta)       
         display_meta.num_labels = 1

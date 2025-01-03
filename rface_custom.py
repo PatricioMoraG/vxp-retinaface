@@ -40,15 +40,18 @@ def parse_objects_from_tensor_meta(layer):
     boxes = boxes[si, :]
     scores = scores[si]
 
-    landmark = landmark[si,:]
+    return boxes
+
+    # landmark = landmark[si,:]
+
 
     # Do nms
-    indices = torchvision.ops.nms(boxes, scores, iou_threshold=IOU_THRESHOLD).cpu()
+    # indices = torchvision.ops.nms(boxes, scores, iou_threshold=IOU_THRESHOLD).cpu()
     # result_boxes = boxes[indices, :].cpu()
     # result_scores = scores[indices].cpu()
-    result_landmark = landmark[indices].cpu()
+    # result_landmark = landmark[indices].cpu()
 
-    return result_landmark
+    #return result_landmark
     # return result_boxes, result_scores, result_landmark
 
 
