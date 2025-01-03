@@ -31,7 +31,7 @@ NVCC:=/usr/local/cuda-$(CUDA_VER)/bin/nvcc
 CFLAGS:= -Wall -std=c++11 -Wno-error=deprecated-declarations
 CFLAGS+= -shared -fPIC
 
-NVDS_VERSION:=6.1
+NVDS_VERSION:=6.2
 CFLAGS+= -I/opt/nvidia/deepstream/deepstream-$(NVDS_VERSION)/sources/includes
 CFLAGS+= -I/usr/local/cuda-$(CUDA_VER)/include
 
